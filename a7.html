@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <script language="javascript">
+      let numRows, numCols;
+
+      function createTable() {
+        numRows = parseInt(document.getElementById("rowsInput").value);
+        numCols = parseInt(document.getElementById("colsInput").value);
+
+        const table = document.createElement("table");
+        for (let i = 0; i < numRows; i++) {
+          const row = table.insertRow();
+          for (let j = 0; j < numCols; j++) {
+            const cell = row.insertCell();
+            cell.appendChild(
+              document.createTextNode(`Row ${i + 1},Col ${j + 1} `)
+            );
+          }
+        }
+
+        const existingTable = document.querySelector("table");
+        if (existingTable) {
+          existingTable.parentNode.replaceChild(table, existingTable);
+        } else {
+          document.body.appendChild(table);
+        }
+        hideInputs();
+      }
+
+      function addNewColumn() {
+        const table = document.querySelector("table");
+        if (!table) return;
+
+        const rows = table.getElementsByTagName("tr");
+        for (let i = 0; i < rows.length; i++) {
+          const cell = rows[i].insertCell();
+          cell.appendChild(document.createTextNode(`New Column`));
+        }
+        numCols += 1;
+      }
+
+      function addNewRow() {
+        const table = document.querySelector("table");
+        if (!table) return;
+
+        const row = table.insertRow();
+        for (let i = 0; i < numCols; i++) {
+          const cell = row.insertCell();
+          cell.appendChild(document.createTextNode(`New Row, Col ${i + 1} `));
+        }
+      }
+
+      function hideUserInputs() {
+        const inputs = document.querySelectorAll("input");
+        const spans = document.querySelectorAll("span");
+        for (let i = 0; i < inputs.length; i++) {
+          inputs[i].style.display = "none";
+          spans[i].style.display = "none";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <font size="8" color="green">Final test lab</font><br /><br />
+    <span> Enter number of rows: </span>
+    <input type="text" id="rowsInput" /><br /><br />
+    <span> Enter number of columns: </span>
+    <input type="text" id="colsInput" /><br /><br />
+
+    <button id="generateButton" onclick="createTable()">Generate Table</button
+    ><br /><br />
+
+    <button id="addColumnButton" onclick="addNewColumn()">Add Column</button>
+
+    <button id="addRowButton" onclick="addNewRow()">Add Row</button>
+  </body>
+</html>
